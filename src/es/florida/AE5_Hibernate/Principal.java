@@ -17,13 +17,17 @@ import es.florida.AE5_Hibernate.Libro;
 public class Principal {
 	
 	public static void llamarLibros() {
+		//carga la configuracion y crea un session factory
 		Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
 		configuration.addClass(Libro.class);
 		ServiceRegistry registry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-		SessionFactory sessionFactory = configuration.buildSessionFactory(registry);
 		
+		//abre una nueva sesion  de la sesion factory
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
+		
+		
+		//recuperar lista de objetos
 		List listaLibros = new ArrayList();
 		listaLibros = session.createQuery("From Libro").list();
 		for(Object obj : listaLibros) {
